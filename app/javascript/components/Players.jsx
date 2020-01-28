@@ -1,0 +1,89 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+class Players extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			players: []
+		};
+	}
+
+	async componentDidMount() {
+		const url = "https://free-nba.p.rapidapi.com/players?per_page=100";
+		const response = await fetch(url, {
+			"method": "GET",
+			"headers": new Headers({
+				"x-rapidapi-host": "free-nba.p.rapidapi.com",
+				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+			})
+		});
+		const data = await response.json();
+		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+		this.setState({players: data.data});
+	}
+
+	render() {
+		const { players } = this.state;
+		const allPlayers = players.map((player, index) => (
+	      <div key={index} className="col-md-6 col-lg-4">
+	        <div className="card mb-4">
+	          <div className="card-body">
+	            <h5 className="card-title">{player.last_name+", "+player.first_name}</h5>
+	            <Link to={"/players/${player.id}"} className="btn custom-button">
+	              View Team
+	            </Link>
+	          </div>
+	        </div>
+	      </div>
+	    ));
+
+    const noPlayers = (
+			<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
+			<h4>
+			No players yet. 
+			</h4>
+			</div>
+			);
+
+    return (
+			<>
+			<section className="jumbotron jumbotron-fluid text-center">
+			<div className="container py-5">
+			<h1 className="display-4">NBA Players</h1>
+			<p className="lead text-muted">
+			We’ve pulled together our most popular recipes, our latest
+			additions, and our editor’s picks, so there’s sure to be something
+			tempting for you to try.
+			</p>
+			</div>
+			</section>
+			<div className="py-5">
+			<main className="container">
+			<div className="text-right mb-3">
+			
+			</div>
+			<div className="row">
+			{players.length > 0 ? allPlayers : noPlayers}
+			</div>
+			<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+			<Link to="/" className="btn btn-link">
+			Home
+			</Link>
+			</main>
+			</div>
+			</>
+			);
+
+	}
+
+}
+export default Players;
