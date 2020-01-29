@@ -89,9 +89,7 @@ class Teams extends React.Component {
 			<div className="row">
 			{teams.length > 0 ? allTeams : noTeams}
 			</div>
-			<Link to="/" className="btn btn-link">
-			Home
-			</Link>
+			
 			</main>
 			</div>
 			</>
