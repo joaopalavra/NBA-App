@@ -1,4 +1,5 @@
 import React from "react";
+import logo from '../../assets/images/nba_PNG6.png';
 import { Link } from "react-router-dom";
 
 class Players extends React.Component {
@@ -48,6 +49,29 @@ class Players extends React.Component {
 
     return (
 			<>
+			<nav className="navbar navbar-light bg-light">
+    			<ul className="nav nav-tabs">
+	    			<Link to="/" >
+						<img src={logo} width="90" height="30" hspace="10" className="">
+						</img>
+					</Link>
+  					<li className="nav-item">
+  						<Link to="/teams" className="nav-link">
+  						Teams
+  						</Link>
+  					</li>
+  					<li className="nav-item">
+    					<Link to="/players" className="nav-link active">
+  						Players
+  						</Link>
+  					</li>
+  					<li className="nav-item">
+    					<Link to="/games" className="nav-link">
+  						Games
+  						</Link>
+ 	 				</li>
+				</ul>
+			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="container py-5">
 			<h1 className="display-4">NBA Players</h1>
