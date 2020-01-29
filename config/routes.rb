@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
-	namespace :api do
-    	namespace :v1 do
-		  get 'teams/index'
-		  get '/show/:id', to: 'teams#show'
-		  get 'players/index'
-		  get '/show/:id', to: 'players#show'
-	  end
-  end
+	
+  get 'teams/index'
+  get '/show/:id', to: 'teams#show'
+  get 'players/index'
+  get 'games/index'
+  get '/show/:id', to: 'games#show'
   root 'homepage#index'
   get '/*path' => 'homepage#index'
   

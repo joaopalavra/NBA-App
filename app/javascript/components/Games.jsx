@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { Pagination } from 'semantic-ui-react'
 
 
-class Players extends React.Component {
+class Games extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			players: [],
+			games: [],
 			currentPageNumber: 1,
 			totalPages: 1,
             itemsPerPage: 30
@@ -18,7 +18,7 @@ class Players extends React.Component {
 	}
 
 	async componentDidMount() {
-		const url = "https://free-nba.p.rapidapi.com/players?page="+this.state.currentPageNumber+"&per_page=30";
+		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&per_page=100";
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
@@ -27,9 +27,9 @@ class Players extends React.Component {
 			})
 		});
 		const data = await response.json();
-		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+		data.data.sort((a,b) => a.date-b.date);
 		this.setState({
-						players: data.data,
+						games: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
 						itemsPerPage: data.meta.per_page,
@@ -40,7 +40,7 @@ class Players extends React.Component {
 		let gotopage = { activePage }
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
-		const url = "https://free-nba.p.rapidapi.com/players?page="+pagestring+"&per_page=30";
+		const url = "https://free-nba.p.rapidapi.com/games?page="+pagestring+"&per_page=100";
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
@@ -49,9 +49,9 @@ class Players extends React.Component {
 			})
 		});
 		const data = await response.json();
-		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+		data.data.sort((a,b) => a.date-b.date);
 		this.setState({
-						players: data.data,
+						games: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
 						itemsPerPage: data.meta.per_page,
@@ -59,29 +59,29 @@ class Players extends React.Component {
 	}
 
 	render() {
-		const { players } = this.state;
-		const allPlayers = players.map((player, index) => (
+		const { games } = this.state;
+		const allGames = games.map((game, index) => (
 	      <div key={index} className="col-md-6 col-lg-4">
 	        <div className="card mb-4">
 	          <div className="card-body">
-	            <h5 className="card-title">{player.last_name+", "+player.first_name}</h5>
-	            <Link to={"/player/${player.id}"} className="btn custom-button">
-	              View Team
+	            <h5 className="card-title">{game.home_team.name+" VS "+game.visitor_team.name}</h5>
+	            <Link to={`/games/${game.id}`} className="btn custom-button">
+	              View Game Details
 	            </Link>
 	          </div>
 	        </div>
 	      </div>
 	    ));
 
-	    const noPlayers = (
-				<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
+	    const noGames = (
+			<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
 				<h4>
-				No players yet. 
+					No games yet. 
 				</h4>
-				</div>
-				);
+			</div>
+		);
 
-    return (
+	return (
 			<>
 			<nav className="navbar navbar-light bg-light">
     			<ul className="nav nav-tabs">
@@ -108,7 +108,7 @@ class Players extends React.Component {
 			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="container py-5">
-			<h1 className="display-4">NBA Players</h1>
+			<h1 className="display-4">NBA Games</h1>
 			<p className="lead text-muted">
 			We’ve pulled together our most popular recipes, our latest
 			additions, and our editor’s picks, so there’s sure to be something
@@ -124,7 +124,7 @@ class Players extends React.Component {
 			 totalPages={this.state.totalPages} />
 			</div>
 			<div className="row">
-			{players.length > 0 ? allPlayers : noPlayers}
+			{games.length > 0 ? allGames : noGames}
 			</div>
 
 			<Pagination className="digg_pagination" onPageChange={this.handlePage} size='mini' siblingRange='10'
@@ -138,4 +138,6 @@ class Players extends React.Component {
 	}
 
 }
-export default Players;
+export default Games;
+
+
