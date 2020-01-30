@@ -12,6 +12,8 @@ Use gem to install Rails v6.0.2.1:
 gem install bundler
 
 gem install rails -v 6.0.2.1
+
+bundle install
 ```
 
 ## Usage
