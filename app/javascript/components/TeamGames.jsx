@@ -21,7 +21,6 @@ class TeamGames extends React.Component {
 		const index = path[3];
 
 		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&team_ids="+index+"&per_page=100";
-		console.log(url);
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
