@@ -64,7 +64,7 @@ class Games extends React.Component {
 	      <div key={index} className="col-md-6 col-lg-4">
 	        <div className="card mb-4">
 	          <div className="card-body">
-	            <h5 className="card-title">{game.home_team.name+" VS "+game.visitor_team.name}</h5>
+	            <h5 className="card-title">{game.home_team.name+" - "+game.home_team_score+" VS "+game.visitor_team.name+" - "+game.visitor_team_score}</h5>
 	            <Link to={`/games/${game.id}`} className="btn custom-button">
 	              View Game Details
 	            </Link>
