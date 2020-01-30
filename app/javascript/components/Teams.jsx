@@ -29,11 +29,9 @@ class Teams extends React.Component {
 			<div key={index} className="col-md-6 col-lg-4">
 			<div className="card mb-4">
 			<div className="card-body">
-			<h4 className="card-title">{team.full_name}</h4>
+			<h4 className="card-title">{team.abbreviation} - {team.full_name}</h4>
+			<h6 className="card-title">Conference: {team.conference}</h6>
 			<h6 className="card-title">Division: {team.division}</h6>
-			<Link to={"/team/${team.id}"} className="btn custom-button">
-			View Team
-			</Link>
 			</div>
 			</div>
 			</div>
@@ -73,6 +71,7 @@ class Teams extends React.Component {
 				</ul>
 			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
+			<div className="img"></div>
 			<div className="container py-5">
 			<h1 className="display-4">NBA Teams</h1>
 			<p className="lead text-muted">

@@ -5,6 +5,7 @@ import Teams from "../components/Teams";
 import Players from "../components/Players";
 import Games from "../components/Games";
 import Game from "../components/Game";
+import TeamGames from "../components/TeamGames";
 
 
 export default (
@@ -15,6 +16,7 @@ export default (
       <Route path="/players" exact component={Players} />
       <Route path="/games" exact component={Games} />
       <Route path="/games/:id" exact component={Game} />
+      <Route path="/games/team/:id" exact component={TeamGames} />
     </Switch>
   </Router>
 );

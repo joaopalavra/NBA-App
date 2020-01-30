@@ -81,4 +81,19 @@
   *:first-child + html .digg_pagination {
     overflow: hidden; }
 
+section {
+    position: relative;
+    background-color: transparent !important;
+}
+
+section .img {
+    position: absolute;
+    left:0; top:0;
+    background-size: cover;
+    min-height: 450px;
+    width: 100%;
+    opacity: 0.30;
+    background-image: url("https://theundefeated.com/wp-content/uploads/2018/12/nba_mock_players_6.jpg?w=1350");
+    z-index: -1;
+}
 

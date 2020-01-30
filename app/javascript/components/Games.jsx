@@ -12,7 +12,7 @@ class Games extends React.Component {
 			games: [],
 			currentPageNumber: 1,
 			totalPages: 1,
-            itemsPerPage: 30
+            itemsPerPage: 100
 		};
 		this.handlePage = this.handlePage.bind(this)
 	}
@@ -95,18 +95,19 @@ class Games extends React.Component {
   						</Link>
   					</li>
   					<li className="nav-item">
-    					<Link to="/players" className="nav-link active">
+    					<Link to="/players" className="nav-link">
   						Players
   						</Link>
   					</li>
   					<li className="nav-item">
-    					<Link to="/games" className="nav-link">
+    					<Link to="/games" className="nav-link active">
   						Games
   						</Link>
  	 				</li>
 				</ul>
 			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
+			<div className="img"></div>
 			<div className="container py-5">
 			<h1 className="display-4">NBA Games</h1>
 			<p className="lead text-muted">

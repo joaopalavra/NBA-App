@@ -28,13 +28,16 @@ class Game extends React.Component {
 			})
 		});
 		const data = await response.json();
+		data.home_team["team_score"] = (data.home_team_score);
+		data.visitor_team["team_score"] = (data.visitor_team_score);
+		//console.log(data);
 		const t = [];
-		t.push(data.home_team)
-		t.push(data.visitor_team)
-		console.log(data);
+		t.push(data.home_team);
+		t.push(data.visitor_team);
+		//console.log(t);
 		this.setState({game: data,
 						teams: t});
-		console.log(this.state.teams[0]);
+		//console.log(this.state.teams[0]);
 	}
 
 	addHtmlEntities(str) {
@@ -47,15 +50,15 @@ class Game extends React.Component {
 		const { teams } = this.state;
 		const allTeams = teams.map((team, index) => (
 			<div key={index} className="col-md-6 col-lg-4">
-			<div className="card mb-4">
-			<div className="card-body">
-			<h4 className="card-title">{team.full_name} - {this.state.game.home_team_score}</h4>
-			<h6 className="card-title">Division: {team.division}</h6>
-			<Link to={`/team/${team.id}`} className="btn custom-button">
-			View Team
-			</Link>
-			</div>
-			</div>
+				<div className="card mb-4">
+					<div className="card-body">
+						<h4 className="card-title">{team.full_name} - {team.team_score}</h4>
+						<h6 className="card-title">Division: {team.division}</h6>
+						<Link to={`/games/team/${team.id}`} className="btn custom-button">
+							View Team Games
+						</Link>
+					</div>
+				</div>
 			</div>
 			));
 
@@ -81,7 +84,7 @@ class Game extends React.Component {
   						</Link>
   					</li>
   					<li className="nav-item">
-    					<Link to="/players" className="nav-link active">
+    					<Link to="/players" className="nav-link">
   						Players
   						</Link>
   					</li>
@@ -93,6 +96,7 @@ class Game extends React.Component {
 				</ul>
 			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
+			<div className="img"></div>
 			<div className="container py-5">
 			<h1 className="display-4">NBA Games</h1>
 			<p className="lead text-muted">

@@ -3,22 +3,25 @@ import logo from '../../assets/images/nba_PNG6.png';
 import { Link } from "react-router-dom";
 import { Pagination } from 'semantic-ui-react'
 
-
-class Players extends React.Component {
+class TeamGames extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			players: [],
+			games: [],
 			currentPageNumber: 1,
 			totalPages: 1,
-            itemsPerPage: 30
+            itemsPerPage: 100
 		};
 		this.handlePage = this.handlePage.bind(this)
 	}
 
 	async componentDidMount() {
-		const url = "https://free-nba.p.rapidapi.com/players?page="+this.state.currentPageNumber+"&per_page=30";
+		const path = this.props.location.pathname.split("/");
+		const index = path[3];
+
+		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&team_ids="+index+"&per_page=100";
+		console.log(url);
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
@@ -27,9 +30,12 @@ class Players extends React.Component {
 			})
 		});
 		const data = await response.json();
-		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+
+		
+		data.data.sort((a,b) => a.date-b.date);
+
 		this.setState({
-						players: data.data,
+						games: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
 						itemsPerPage: data.meta.per_page,
@@ -37,10 +43,12 @@ class Players extends React.Component {
 	}
 
 	async handlePage (e, {activePage}) {
+		const path = this.props.location.pathname.split("/");
+		const index = path[3];
 		let gotopage = { activePage }
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
-		const url = "https://free-nba.p.rapidapi.com/players?page="+pagestring+"&per_page=30";
+		const url = "https://free-nba.p.rapidapi.com/games?page="+pagestring+"&team_ids="+index+"&per_page=100";
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
@@ -49,9 +57,9 @@ class Players extends React.Component {
 			})
 		});
 		const data = await response.json();
-		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+		data.data.sort((a,b) => a.date-b.date);
 		this.setState({
-						players: data.data,
+						games: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
 						itemsPerPage: data.meta.per_page,
@@ -59,28 +67,29 @@ class Players extends React.Component {
 	}
 
 	render() {
-		const { players } = this.state;
-		const allPlayers = players.map((player, index) => (
+		const { games } = this.state;
+		const allGames = games.map((game, index) => (
 	      <div key={index} className="col-md-6 col-lg-4">
 	        <div className="card mb-4">
 	          <div className="card-body">
-	            <h5 className="card-title">{player.last_name+", "+player.first_name}</h5>
-	            <h6 className="card-title">Position: {player.position}</h6>
-	            <h6 className="card-title">Team: {player.team.full_name}</h6>
+	            <h5 className="card-title">{game.home_team.name+" VS "+game.visitor_team.name}</h5>
+	            <Link to={`/games/${game.id}`} className="btn custom-button">
+	              View Game Details
+	            </Link>
 	          </div>
 	        </div>
 	      </div>
 	    ));
 
-	    const noPlayers = (
-				<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
+	    const noGames = (
+			<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
 				<h4>
-				No players yet. 
+					No games yet. 
 				</h4>
-				</div>
-				);
+			</div>
+		);
 
-    return (
+	return (
 			<>
 			<nav className="navbar navbar-light bg-light">
     			<ul className="nav nav-tabs">
@@ -94,7 +103,7 @@ class Players extends React.Component {
   						</Link>
   					</li>
   					<li className="nav-item">
-    					<Link to="/players" className="nav-link active">
+    					<Link to="/players" className="nav-link">
   						Players
   						</Link>
   					</li>
@@ -108,7 +117,7 @@ class Players extends React.Component {
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
 			<div className="container py-5">
-			<h1 className="display-4">NBA Players</h1>
+			<h1 className="display-4">NBA Games</h1>
 			<p className="lead text-muted">
 			We’ve pulled together our most popular recipes, our latest
 			additions, and our editor’s picks, so there’s sure to be something
@@ -124,7 +133,7 @@ class Players extends React.Component {
 			 totalPages={this.state.totalPages} />
 			</div>
 			<div className="row">
-			{players.length > 0 ? allPlayers : noPlayers}
+			{games.length > 0 ? allGames : noGames}
 			</div>
 
 			<Pagination className="digg_pagination" onPageChange={this.handlePage} size='mini' siblingRange='10'
@@ -138,4 +147,4 @@ class Players extends React.Component {
 	}
 
 }
-export default Players;
+export default TeamGames;

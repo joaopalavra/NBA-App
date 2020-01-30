@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'players/index'
   get 'games/index'
   get '/show/:id', to: 'games#show'
+  
   root 'homepage#index'
   get '/*path' => 'homepage#index'
   
