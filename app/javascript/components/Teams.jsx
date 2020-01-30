@@ -69,6 +69,10 @@ class Teams extends React.Component {
   						</Link>
  	 				</li>
 				</ul>
+				<select className="selectpicker" data-width="fit">
+    				<option data-content='<span className="flag-icon flag-icon-us"></span> English'>English</option>
+  					<option  data-content='<span className="flag-icon flag-icon-mx"></span> Português'>Português</option>
+				</select>
 			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
