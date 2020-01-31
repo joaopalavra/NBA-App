@@ -41,8 +41,8 @@
   .digg_pagination a, .digg_pagination span, .digg_pagination em {
     padding: 0.2em 0.5em;
     display: block;
-    float: left;
-    margin-right: 1px; }
+    float: center;
+    margin-right: 7.4px; }
   .digg_pagination .disabled {
     color: #999999;
     border: 1px solid #dddddd; }
@@ -90,9 +90,9 @@ section .img {
     position: absolute;
     left:0; top:0;
     background-size: cover;
-    min-height: 450px;
+    min-height: 700px;
     width: 100%;
-    opacity: 0.30;
+    opacity: 0.25;
     background-image: url("https://theundefeated.com/wp-content/uploads/2018/12/nba_mock_players_6.jpg?w=1350");
     z-index: -1;
 }

@@ -116,12 +116,8 @@ class TeamGames extends React.Component {
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
 			<div className="container py-5">
-			<h1 className="display-4">NBA Games</h1>
-			<p className="lead text-muted">
-			We’ve pulled together our most popular recipes, our latest
-			additions, and our editor’s picks, so there’s sure to be something
-			tempting for you to try.
-			</p>
+			<h1 className="display-4">Team Games</h1>
+			
 			</div>
 			</section>
 			<div className="py-5">
