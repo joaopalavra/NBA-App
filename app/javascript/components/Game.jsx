@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component, Suspense }  from "react";
+import { withTranslation } from "react-i18next";
 import logo from '../../assets/images/nba_PNG6.png';
 import { Link } from "react-router-dom";
 import { Pagination } from 'semantic-ui-react'
@@ -6,7 +7,7 @@ import { Pagination } from 'semantic-ui-react'
 class Game extends React.Component {
 	constructor(props) {
 		super(props);
-
+		this._isMounted = false;
 		this.state = {
 			game: [],
 			teams: []			
@@ -14,12 +15,9 @@ class Game extends React.Component {
 	}
 
 	async componentDidMount() {
-		const {
-      		match: {
-        	params: { id }
-      		}
-		} = this.props;
-		const url = `https://free-nba.p.rapidapi.com/games/${id}`;
+		this._isMounted = true;
+		const id = (window.location.href).split("/");
+		const url = "https://free-nba.p.rapidapi.com/games/"+id[id.length-1];
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
@@ -35,27 +33,31 @@ class Game extends React.Component {
 		t.push(data.home_team);
 		t.push(data.visitor_team);
 		//console.log(t);
-		this.setState({game: data,
+		this._isMounted && this.setState({game: data,
 						teams: t});
 		//console.log(this.state.teams[0]);
 	}
 
-	addHtmlEntities(str) {
-    return String(str)
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">");
+	componentWillUnmount(){
+		this._isMounted = false;
 	}
 
+
 	render() {
+		const { t, i18n  } = this.props;
+
+		const changeLanguage = lng => {
+    		i18n.changeLanguage(lng);
+  		};
 		const { teams } = this.state;
 		const allTeams = teams.map((team, index) => (
 			<div key={index} className="col-md-6 col-lg-4">
 				<div className="card mb-4">
 					<div className="card-body">
 						<h4 className="card-title">{team.full_name} - {team.team_score}</h4>
-						<h6 className="card-title">Division: {team.division}</h6>
+						<h6 className="card-title">{t("Division")}: {t(team.division)}</h6>
 						<Link to={`/games/team/${team.id}`} className="btn custom-button">
-							View Team Games
+							{t("View Team Games")}
 						</Link>
 					</div>
 				</div>
@@ -65,7 +67,7 @@ class Game extends React.Component {
 		const noTeams = (
 			<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
 			<h4>
-			No teams yet. 
+			{t("No teams yet.")}
 			</h4>
 			</div>
 			);
@@ -80,25 +82,36 @@ class Game extends React.Component {
 					</Link>
   					<li className="nav-item">
   						<Link to="/teams" className="nav-link">
-  						Teams
+  						{t("Teams")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/players" className="nav-link">
-  						Players
+  						{t("Players")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/games" className="nav-link">
-  						Games
+  						{t("Games")}
   						</Link>
  	 				</li>
 				</ul>
+				
+				<div className="dropdown">
+				  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    {t("Language")}
+				  </button>
+				  <div className="dropdown-menu">
+				    <a className="dropdown-item" onClick={() => changeLanguage("en")}>English</a>
+				    <a className="dropdown-item" onClick={() => changeLanguage("pt")}>Português</a>
+				  </div>
+				</div>
 			</nav>
+
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
 			<div className="container py-5">
-			<h1 className="display-4">Game Details</h1>
+			<h1 className="display-4">{t("Game Details")}</h1>
 			
 			</div>
 			</section>
@@ -120,6 +133,14 @@ class Game extends React.Component {
 	}
 
 }
+const MyComponent = withTranslation()(Game)
+export default function App() {
+	
+  return (
+    <Suspense fallback="loading">
+      <MyComponent />
+    </Suspense>
+  );
+}
 
-export default Game;
 

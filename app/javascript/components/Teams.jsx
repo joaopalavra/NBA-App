@@ -1,16 +1,20 @@
-import React from "react";
+import React, { Component, Suspense }  from "react";
+import { withTranslation } from "react-i18next";
 import logo from '../../assets/images/nba_PNG6.png';
 import { Link } from "react-router-dom";
+
 
 class Teams extends React.Component {
 	constructor(props) {
 		super(props);
+		this._isMounted = false;
 		this.state = {
 			teams: []
 		};
 	}
 
 	async componentDidMount() {
+		this._isMounted = true;
 		const url = "https://free-nba.p.rapidapi.com/teams";
 		const response = await fetch(url, {
 			"method": "GET",
@@ -20,18 +24,29 @@ class Teams extends React.Component {
 			})
 		});
 		const data = await response.json();
-		this.setState({teams: data.data});
+		this._isMounted && this.setState({teams: data.data});
 	}
 
+	componentWillUnmount(){
+		this._isMounted = false;
+	}
+
+
+
 	render() {
+		const { t, i18n  } = this.props;
+
+		const changeLanguage = lng => {
+    		i18n.changeLanguage(lng);
+  		};
 		const { teams } = this.state;
 		const allTeams = teams.map((team, index) => (
 			<div key={index} className="col-md-6 col-lg-4">
 			<div className="card mb-4">
 			<div className="card-body">
 			<h4 className="card-title">{team.abbreviation} - {team.full_name}</h4>
-			<h6 className="card-title">Conference: {team.conference}</h6>
-			<h6 className="card-title">Division: {team.division}</h6>
+			<h6 className="card-title">{t("Conference")}: {t(team.conference)}</h6>
+			<h6 className="card-title">{t("Division")}: {t(team.division)}</h6>
 			</div>
 			</div>
 			</div>
@@ -40,10 +55,13 @@ class Teams extends React.Component {
 		const noTeams = (
 			<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
 			<h4>
-			No teams yet. 
+			{t("No teams yet.")}
 			</h4>
 			</div>
 			);
+		
+		
+		
 
 		return (
 			<>
@@ -55,30 +73,35 @@ class Teams extends React.Component {
 					</Link>
   					<li className="nav-item">
   						<Link to="/teams" className="nav-link active">
-  						Teams
+  						{t("Teams")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/players" className="nav-link">
-  						Players
+  						{t("Players")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/games" className="nav-link">
-  						Games
+  						{t("Games")}
   						</Link>
  	 				</li>
 				</ul>
-				<select className="selectpicker" data-width="fit">
-    				<option data-content='<span className="flag-icon flag-icon-us"></span> English'>English</option>
-  					<option  data-content='<span className="flag-icon flag-icon-mx"></span> Português'>Português</option>
-				</select>
+				
+				<div className="dropdown">
+				  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    {t("Language")}
+				  </button>
+				  <div className="dropdown-menu">
+				    <a className="dropdown-item" onClick={() => changeLanguage("en")}>English</a>
+				    <a className="dropdown-item" onClick={() => changeLanguage("pt")}>Português</a>
+				  </div>
+				</div>
 			</nav>
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
 			<div className="container py-5">
-			<h1 className="display-4">NBA Teams</h1>
-			
+			<h1 className="display-4">{t("NBA Teams")}</h1>
 			</div>
 			</section>
 			<div className="py-5">
@@ -99,4 +122,12 @@ class Teams extends React.Component {
 
 
 }
-export default Teams;
+const MyComponent = withTranslation()(Teams)
+export default function App() {
+	
+  return (
+    <Suspense fallback="loading">
+      <MyComponent />
+    </Suspense>
+  );
+}

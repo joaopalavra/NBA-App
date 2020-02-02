@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component, Suspense }  from "react";
+import { withTranslation } from "react-i18next";
 import logo from '../../assets/images/nba_PNG6.png';
 import { Link } from "react-router-dom";
 import { Pagination } from 'semantic-ui-react'
@@ -7,7 +8,7 @@ import { Pagination } from 'semantic-ui-react'
 class Games extends React.Component {
 	constructor(props) {
 		super(props);
-
+		this._isMounted = false;
 		this.state = {
 			games: [],
 			currentPageNumber: 1,
@@ -18,6 +19,7 @@ class Games extends React.Component {
 	}
 
 	async componentDidMount() {
+		this._isMounted = true;
 		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&per_page=100";
 		const response = await fetch(url, {
 			"method": "GET",
@@ -28,7 +30,7 @@ class Games extends React.Component {
 		});
 		const data = await response.json();
 		data.data.sort((a,b) => a.date-b.date);
-		this.setState({
+		this._isMounted && this.setState({
 						games: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
@@ -36,7 +38,12 @@ class Games extends React.Component {
 						});
 	}
 
+	componentWillUnmount(){
+		this._isMounted = false;
+	}
+
 	async handlePage (e, {activePage}) {
+		this._isMounted = true;
 		let gotopage = { activePage }
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
@@ -50,7 +57,7 @@ class Games extends React.Component {
 		});
 		const data = await response.json();
 		data.data.sort((a,b) => a.date-b.date);
-		this.setState({
+		this._isMounted && this.setState({
 						games: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
@@ -59,6 +66,11 @@ class Games extends React.Component {
 	}
 
 	render() {
+		const { t, i18n  } = this.props;
+
+		const changeLanguage = lng => {
+    		i18n.changeLanguage(lng);
+  		};
 		const { games } = this.state;
 		const allGames = games.map((game, index) => (
 	      <div key={index} className="col-md-6 col-lg-4">
@@ -66,7 +78,7 @@ class Games extends React.Component {
 	          <div className="card-body">
 	            <h5 className="card-title">{game.home_team.name+" - "+game.home_team_score+" VS "+game.visitor_team.name+" - "+game.visitor_team_score}</h5>
 	            <Link to={`/games/${game.id}`} className="btn custom-button">
-	              View Game Details
+	              {t("View Game Details")}
 	            </Link>
 	          </div>
 	        </div>
@@ -76,7 +88,7 @@ class Games extends React.Component {
 	    const noGames = (
 			<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
 				<h4>
-					No games yet. 
+					{t("No games yet.")}
 				</h4>
 			</div>
 		);
@@ -91,25 +103,36 @@ class Games extends React.Component {
 					</Link>
   					<li className="nav-item">
   						<Link to="/teams" className="nav-link">
-  						Teams
+  						{t("Teams")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/players" className="nav-link">
-  						Players
+  						{t("Players")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/games" className="nav-link active">
-  						Games
+  						{t("Games")}
   						</Link>
  	 				</li>
 				</ul>
+				
+				<div className="dropdown">
+				  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    {t("Language")}
+				  </button>
+				  <div className="dropdown-menu">
+				    <a className="dropdown-item" onClick={() => changeLanguage("en")}>English</a>
+				    <a className="dropdown-item" onClick={() => changeLanguage("pt")}>Português</a>
+				  </div>
+				</div>
 			</nav>
+
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
 			<div className="container py-5">
-			<h1 className="display-4">NBA Games</h1>
+			<h1 className="display-4">{t("NBA Games")}</h1>
 			
 			</div>
 			</section>
@@ -135,6 +158,14 @@ class Games extends React.Component {
 	}
 
 }
-export default Games;
+const MyComponent = withTranslation()(Games)
+export default function App() {
+	
+  return (
+    <Suspense fallback="loading">
+      <MyComponent />
+    </Suspense>
+  );
+}
 
 

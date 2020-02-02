@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component, Suspense }  from "react";
+import { withTranslation } from "react-i18next";
 import logo from '../../assets/images/nba_PNG6.png';
 import { Link } from "react-router-dom";
 import { Pagination } from 'semantic-ui-react'
@@ -7,7 +8,7 @@ import { Pagination } from 'semantic-ui-react'
 class Players extends React.Component {
 	constructor(props) {
 		super(props);
-
+		this._isMounted = false;
 		this.state = {
 			players: [],
 			currentPageNumber: 1,
@@ -18,6 +19,7 @@ class Players extends React.Component {
 	}
 
 	async componentDidMount() {
+		this._isMounted = true;
 		const url = "https://free-nba.p.rapidapi.com/players?page="+this.state.currentPageNumber+"&per_page=30";
 		const response = await fetch(url, {
 			"method": "GET",
@@ -28,7 +30,7 @@ class Players extends React.Component {
 		});
 		const data = await response.json();
 		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
-		this.setState({
+		this._isMounted && this.setState({
 						players: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
@@ -36,7 +38,12 @@ class Players extends React.Component {
 						});
 	}
 
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+
 	async handlePage (e, {activePage}) {
+		this._isMounted = true;
 		let gotopage = { activePage }
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
@@ -50,7 +57,7 @@ class Players extends React.Component {
 		});
 		const data = await response.json();
 		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
-		this.setState({
+		this._isMounted && this.setState({
 						players: data.data,
 						currentPageNumber: data.meta.current_page,
 						totalPages: data.meta.total_pages,
@@ -59,14 +66,19 @@ class Players extends React.Component {
 	}
 
 	render() {
+		const { t, i18n  } = this.props;
+
+		const changeLanguage = lng => {
+    		i18n.changeLanguage(lng);
+  		};
 		const { players } = this.state;
 		const allPlayers = players.map((player, index) => (
 	      <div key={index} className="col-md-6 col-lg-4">
 	        <div className="card mb-4">
 	          <div className="card-body">
 	            <h5 className="card-title">{player.last_name+", "+player.first_name}</h5>
-	            <h6 className="card-title">Position: {player.position}</h6>
-	            <h6 className="card-title">Team: {player.team.full_name}</h6>
+	            <h6 className="card-title">{t("Position")}: {player.position}</h6>
+	            <h6 className="card-title">{t("Team")}: {player.team.full_name}</h6>
 	          </div>
 	        </div>
 	      </div>
@@ -75,7 +87,7 @@ class Players extends React.Component {
 	    const noPlayers = (
 				<div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
 				<h4>
-				No players yet. 
+				{t("No players yet.")}
 				</h4>
 				</div>
 				);
@@ -90,25 +102,36 @@ class Players extends React.Component {
 					</Link>
   					<li className="nav-item">
   						<Link to="/teams" className="nav-link">
-  						Teams
+  						{t("Teams")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/players" className="nav-link active">
-  						Players
+  						{t("Players")}
   						</Link>
   					</li>
   					<li className="nav-item">
     					<Link to="/games" className="nav-link">
-  						Games
+  						{t("Games")}
   						</Link>
  	 				</li>
 				</ul>
+				
+				<div className="dropdown">
+				  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    {t("Language")}
+				  </button>
+				  <div className="dropdown-menu">
+				    <a className="dropdown-item" onClick={() => changeLanguage("en")}>English</a>
+				    <a className="dropdown-item" onClick={() => changeLanguage("pt")}>Português</a>
+				  </div>
+				</div>
 			</nav>
+
 			<section className="jumbotron jumbotron-fluid text-center">
 			<div className="img"></div>
 			<div className="container py-5">
-			<h1 className="display-4">NBA Players</h1>
+			<h1 className="display-4">{t("NBA Players")}</h1>
 			
 			</div>
 			</section>
@@ -134,4 +157,12 @@ class Players extends React.Component {
 	}
 
 }
-export default Players;
+const MyComponent = withTranslation()(Players)
+export default function App() {
+	
+  return (
+    <Suspense fallback="loading">
+      <MyComponent />
+    </Suspense>
+  );
+}
