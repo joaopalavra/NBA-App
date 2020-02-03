@@ -21,21 +21,27 @@ class Players extends React.Component {
 	async componentDidMount() {
 		this._isMounted = true;
 		const url = "https://free-nba.p.rapidapi.com/players?page="+this.state.currentPageNumber+"&per_page=30";
-		const response = await fetch(url, {
-			"method": "GET",
-			"headers": new Headers({
-				"x-rapidapi-host": "free-nba.p.rapidapi.com",
-				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
-			})
-		});
-		const data = await response.json();
-		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
-		this._isMounted && this.setState({
-						players: data.data,
-						currentPageNumber: data.meta.current_page,
-						totalPages: data.meta.total_pages,
-						itemsPerPage: data.meta.per_page,
-						});
+		try {
+			const response = await fetch(url, {
+				"method": "GET",
+				"headers": new Headers({
+					"x-rapidapi-host": "free-nba.p.rapidapi.com",
+					"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+				})
+			});
+			const data = await response.json();
+			data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+			this._isMounted && this.setState({
+							players: data.data,
+							currentPageNumber: data.meta.current_page,
+							totalPages: data.meta.total_pages,
+							itemsPerPage: data.meta.per_page,
+							});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
 	}
 
 	componentWillUnmount() {
@@ -48,21 +54,27 @@ class Players extends React.Component {
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
 		const url = "https://free-nba.p.rapidapi.com/players?page="+pagestring+"&per_page=30";
-		const response = await fetch(url, {
-			"method": "GET",
-			"headers": new Headers({
-				"x-rapidapi-host": "free-nba.p.rapidapi.com",
-				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
-			})
-		});
-		const data = await response.json();
-		data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
-		this._isMounted && this.setState({
-						players: data.data,
-						currentPageNumber: data.meta.current_page,
-						totalPages: data.meta.total_pages,
-						itemsPerPage: data.meta.per_page,
-						});
+		try {
+			const response = await fetch(url, {
+				"method": "GET",
+				"headers": new Headers({
+					"x-rapidapi-host": "free-nba.p.rapidapi.com",
+					"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+				})
+			});
+			const data = await response.json();
+			data.data.sort((a,b) => (a.last_name > b.last_name) ? 1 : ((b.last_name > a.last_name) ? -1 : 0));
+			this._isMounted && this.setState({
+							players: data.data,
+							currentPageNumber: data.meta.current_page,
+							totalPages: data.meta.total_pages,
+							itemsPerPage: data.meta.per_page,
+							});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
 	}
 
 	render() {

@@ -18,24 +18,28 @@ class Game extends React.Component {
 		this._isMounted = true;
 		const id = (window.location.href).split("/");
 		const url = "https://free-nba.p.rapidapi.com/games/"+id[id.length-1];
-		const response = await fetch(url, {
-			"method": "GET",
-			"headers": new Headers({
-				"x-rapidapi-host": "free-nba.p.rapidapi.com",
-				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
-			})
-		});
-		const data = await response.json();
-		data.home_team["team_score"] = (data.home_team_score);
-		data.visitor_team["team_score"] = (data.visitor_team_score);
-		//console.log(data);
-		const t = [];
-		t.push(data.home_team);
-		t.push(data.visitor_team);
-		//console.log(t);
-		this._isMounted && this.setState({game: data,
-						teams: t});
-		//console.log(this.state.teams[0]);
+		try {
+			const response = await fetch(url, {
+				"method": "GET",
+				"headers": new Headers({
+					"x-rapidapi-host": "free-nba.p.rapidapi.com",
+					"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+				})
+			});
+			const data = await response.json();
+			data.home_team["team_score"] = (data.home_team_score);
+			data.visitor_team["team_score"] = (data.visitor_team_score);
+			//console.log(data);
+			const t = [];
+			t.push(data.home_team);
+			t.push(data.visitor_team);
+			this._isMounted && this.setState({game: data,
+							teams: t});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
 	}
 
 	componentWillUnmount(){
@@ -47,7 +51,7 @@ class Game extends React.Component {
 		const { t, i18n  } = this.props;
 
 		const changeLanguage = lng => {
-    		i18n.changeLanguage(lng);
+			i18n.changeLanguage(lng);
   		};
 		const { teams } = this.state;
 		const allTeams = teams.map((team, index) => (
@@ -75,8 +79,8 @@ class Game extends React.Component {
 	return (
 			<>
 			<nav className="navbar navbar-light bg-light">
-    			<ul className="nav nav-tabs">
-	    			<Link to="/" >
+				<ul className="nav nav-tabs">
+					<Link to="/" >
 						<img src={logo} width="90" height="30" hspace="10" className="">
 						</img>
 					</Link>
@@ -86,12 +90,12 @@ class Game extends React.Component {
   						</Link>
   					</li>
   					<li className="nav-item">
-    					<Link to="/players" className="nav-link">
+						<Link to="/players" className="nav-link">
   						{t("Players")}
   						</Link>
   					</li>
   					<li className="nav-item">
-    					<Link to="/games" className="nav-link">
+						<Link to="/games" className="nav-link">
   						{t("Games")}
   						</Link>
  	 				</li>
@@ -99,11 +103,11 @@ class Game extends React.Component {
 				
 				<div className="dropdown">
 				  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    {t("Language")}
+					{t("Language")}
 				  </button>
 				  <div className="dropdown-menu">
-				    <a className="dropdown-item" onClick={() => changeLanguage("en")}>English</a>
-				    <a className="dropdown-item" onClick={() => changeLanguage("pt")}>Português</a>
+					<a className="dropdown-item" onClick={() => changeLanguage("en")}>English</a>
+					<a className="dropdown-item" onClick={() => changeLanguage("pt")}>Português</a>
 				  </div>
 				</div>
 			</nav>
@@ -137,9 +141,9 @@ const MyComponent = withTranslation()(Game)
 export default function App() {
 	
   return (
-    <Suspense fallback="loading">
-      <MyComponent />
-    </Suspense>
+	<Suspense fallback="loading">
+	  <MyComponent />
+	</Suspense>
   );
 }
 

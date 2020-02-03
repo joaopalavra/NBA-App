@@ -20,25 +20,31 @@ class TeamGames extends React.Component {
 	async componentDidMount() {
 		this._isMounted = true;
 		const id = (window.location.href).split("/");
-		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&team_ids="+id[id.length-1]+"&per_page=100";
-		const response = await fetch(url, {
-			"method": "GET",
-			"headers": new Headers({
-				"x-rapidapi-host": "free-nba.p.rapidapi.com",
-				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
-			})
-		});
-		const data = await response.json();
+		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&team_ids[]="+id[id.length-1]+"&per_page=100";
+		try {
+			const response = await fetch(url, {
+				"method": "GET",
+				"headers": new Headers({
+					"x-rapidapi-host": "free-nba.p.rapidapi.com",
+					"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+				})
+			});
+			const data = await response.json();
 
-		
-		data.data.sort((a,b) => a.date-b.date);
+			
+			data.data.sort((a,b) => a.date-b.date);
 
-		this._isMounted && this.setState({
-						games: data.data,
-						currentPageNumber: data.meta.current_page,
-						totalPages: data.meta.total_pages,
-						itemsPerPage: data.meta.per_page,
-						});
+			this._isMounted && this.setState({
+							games: data.data,
+							currentPageNumber: data.meta.current_page,
+							totalPages: data.meta.total_pages,
+							itemsPerPage: data.meta.per_page,
+							});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
 	}
 
 	async handlePage (e, {activePage}) {
@@ -47,22 +53,28 @@ class TeamGames extends React.Component {
 		let gotopage = { activePage }
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
-		const url = "https://free-nba.p.rapidapi.com/games?page="+pagestring+"&team_ids="+id[id.length-1]+"&per_page=100";
-		const response = await fetch(url, {
-			"method": "GET",
-			"headers": new Headers({
-				"x-rapidapi-host": "free-nba.p.rapidapi.com",
-				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
-			})
-		});
-		const data = await response.json();
-		data.data.sort((a,b) => a.date-b.date);
-		this._isMounted && this.setState({
-						games: data.data,
-						currentPageNumber: data.meta.current_page,
-						totalPages: data.meta.total_pages,
-						itemsPerPage: data.meta.per_page,
-						});
+		const url = "https://free-nba.p.rapidapi.com/games?page="+pagestring+"&team_ids[]="+id[id.length-1]+"&per_page=100";
+		try {
+			const response = await fetch(url, {
+				"method": "GET",
+				"headers": new Headers({
+					"x-rapidapi-host": "free-nba.p.rapidapi.com",
+					"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+				})
+			});
+			const data = await response.json();
+			data.data.sort((a,b) => a.date-b.date);
+			this._isMounted && this.setState({
+							games: data.data,
+							currentPageNumber: data.meta.current_page,
+							totalPages: data.meta.total_pages,
+							itemsPerPage: data.meta.per_page,
+							});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
 	}
 
 	componentWillUnmount(){

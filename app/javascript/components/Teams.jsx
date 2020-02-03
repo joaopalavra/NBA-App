@@ -16,15 +16,21 @@ class Teams extends React.Component {
 	async componentDidMount() {
 		this._isMounted = true;
 		const url = "https://free-nba.p.rapidapi.com/teams";
-		const response = await fetch(url, {
-			"method": "GET",
-			"headers": new Headers({
-				"x-rapidapi-host": "free-nba.p.rapidapi.com",
-				"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
-			})
-		});
-		const data = await response.json();
-		this._isMounted && this.setState({teams: data.data});
+		try {
+			const response = await fetch(url, {
+				"method": "GET",
+				"headers": new Headers({
+					"x-rapidapi-host": "free-nba.p.rapidapi.com",
+					"x-rapidapi-key": "6892d4ffdemshdb9d8e292b4d399p1f7536jsn73596096465e"
+				})
+			});
+			const data = await response.json();
+			this._isMounted && this.setState({teams: data.data});
+		} catch (error) {
+	    	this.setState({
+	        	error
+	    	});
+	    } 
 	}
 
 	componentWillUnmount(){

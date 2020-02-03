@@ -21,7 +21,10 @@ class Games extends React.Component {
 	async componentDidMount() {
 		this._isMounted = true;
 		const url = "https://free-nba.p.rapidapi.com/games?page="+this.state.currentPageNumber+"&per_page=100";
-		const response = await fetch(url, {
+		
+
+		try {
+			const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
 				"x-rapidapi-host": "free-nba.p.rapidapi.com",
@@ -36,6 +39,12 @@ class Games extends React.Component {
 						totalPages: data.meta.total_pages,
 						itemsPerPage: data.meta.per_page,
 						});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
+
 	}
 
 	componentWillUnmount(){
@@ -48,6 +57,7 @@ class Games extends React.Component {
 		let pagenum = gotopage.activePage
 		let pagestring = pagenum.toString()
 		const url = "https://free-nba.p.rapidapi.com/games?page="+pagestring+"&per_page=100";
+		try {
 		const response = await fetch(url, {
 			"method": "GET",
 			"headers": new Headers({
@@ -63,6 +73,11 @@ class Games extends React.Component {
 						totalPages: data.meta.total_pages,
 						itemsPerPage: data.meta.per_page,
 						});
+		} catch (error) {	
+			this.setState({
+				error
+			});
+		}
 	}
 
 	render() {

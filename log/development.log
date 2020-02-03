@@ -1,0 +1,466 @@
+Started GET "/" for ::1 at 2020-02-03 17:12:25 +0000
+  [1m[35m (2.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (6.0.2.1) lib/active_record/migration.rb:587:in `check_pending!'
+activerecord (6.0.2.1) lib/active_record/migration.rb:564:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.2.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.0.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.0.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.0.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.0.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.2.1) lib/rails/rack/logger.rb:38:in `call_app'
+railties (6.0.2.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.2.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.2.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.2.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.2.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.1.2) lib/rack/method_override.rb:24:in `call'
+rack (2.1.2) lib/rack/runtime.rb:24:in `call'
+activesupport (6.0.2.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.1.2) lib/rack/sendfile.rb:113:in `call'
+actionpack (6.0.2.1) lib/action_dispatch/middleware/host_authorization.rb:83:in `call'
+webpacker (4.2.2) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.2.1) lib/rails/engine.rb:526:in `call'
+puma (4.3.1) lib/puma/configuration.rb:228:in `call'
+puma (4.3.1) lib/puma/server.rb:681:in `handle_request'
+puma (4.3.1) lib/puma/server.rb:472:in `process_client'
+puma (4.3.1) lib/puma/server.rb:328:in `block in run'
+puma (4.3.1) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started POST "/rails/actions" for ::1 at 2020-02-03 17:12:27 +0000
+  [1m[35m (8.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateTeams (20200128164425)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "conference" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200128164425"]]
+  [1m[35m (6.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePlayers (20200128180116)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "players" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200128180116"]]
+  [1m[35m (6.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateGames (20200129180516)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "games" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200129180516"]]
+  [1m[35m (6.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-02-03 17:12:27.364476"], ["updated_at", "2020-02-03 17:12:27.364476"]]
+  [1m[35m (6.8ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/" for ::1 at 2020-02-03 17:12:27 +0000
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by HomepageController#index as HTML
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.3ms | Allocations: 79)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: fac7df8d3294dc7be679
+Version: webpack 4.41.5
+Time: 13074ms
+Built at: 02/03/2020 5:12:42 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-219132da455d9ccaefb6.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-219132da455d9ccaefb6.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-219132da455d9ccaefb6.js js/Index-219132da455d9ccaefb6.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 15716ms (Views: 15712.2ms | ActiveRecord: 0.0ms | Allocations: 24620)
+
+
+Started GET "/teams" for ::1 at 2020-02-03 17:15:44 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"teams"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: 7d52385e21a35435fe35
+Version: webpack 4.41.5
+Time: 5845ms
+Built at: 02/03/2020 5:15:52 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-498f53c60a5339541160.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-498f53c60a5339541160.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-498f53c60a5339541160.js js/Index-498f53c60a5339541160.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 8017ms (Views: 8016.2ms | ActiveRecord: 0.0ms | Allocations: 8600)
+
+
+Started GET "/teams" for ::1 at 2020-02-03 17:17:18 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"teams"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: f08196eec9b5fd122f64
+Version: webpack 4.41.5
+Time: 5925ms
+Built at: 02/03/2020 5:17:26 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-86fc008f22cac311af97.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-86fc008f22cac311af97.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-86fc008f22cac311af97.js js/Index-86fc008f22cac311af97.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 8101ms (Views: 8100.4ms | ActiveRecord: 0.0ms | Allocations: 8643)
+
+
+Started GET "/teams" for ::1 at 2020-02-03 17:17:57 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"teams"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 5)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: 3af97e076d31c11fb858
+Version: webpack 4.41.5
+Time: 5960ms
+Built at: 02/03/2020 5:18:05 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-66c2726e184986934a26.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-66c2726e184986934a26.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-66c2726e184986934a26.js js/Index-66c2726e184986934a26.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 8155ms (Views: 8154.5ms | ActiveRecord: 0.0ms | Allocations: 8624)
+
+
+Started GET "/games/47179" for ::1 at 2020-02-03 17:21:04 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"games/47179"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 4)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: 4ca5c5fe4d4d3f5f1208
+Version: webpack 4.41.5
+Time: 5691ms
+Built at: 02/03/2020 5:21:12 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-39812311488a5c2732c9.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-39812311488a5c2732c9.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-39812311488a5c2732c9.js js/Index-39812311488a5c2732c9.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 7860ms (Views: 7859.3ms | ActiveRecord: 0.0ms | Allocations: 8624)
+
+
+Started GET "/games" for ::1 at 2020-02-03 17:23:42 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"games"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 4)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: 93eb3da161dd731e47d5
+Version: webpack 4.41.5
+Time: 6129ms
+Built at: 02/03/2020 5:23:50 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-1eaddad2628220465dc6.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-1eaddad2628220465dc6.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-1eaddad2628220465dc6.js js/Index-1eaddad2628220465dc6.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 8259ms (Views: 8258.9ms | ActiveRecord: 0.0ms | Allocations: 8627)
+
+
+Started GET "/games" for ::1 at 2020-02-03 17:25:26 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"games"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 4)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: aa4033cd083c98f02202
+Version: webpack 4.41.5
+Time: 5736ms
+Built at: 02/03/2020 5:25:33 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-6c8a7010990fe133c01c.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-6c8a7010990fe133c01c.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-6c8a7010990fe133c01c.js js/Index-6c8a7010990fe133c01c.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 7872ms (Views: 7872.0ms | ActiveRecord: 0.0ms | Allocations: 8626)
+
+
+Started GET "/games" for ::1 at 2020-02-03 17:28:14 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"games"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 4)
+[Webpacker] Compiling...
+[Webpacker] Compilation failed:
+Hash: 75370d35b55aab2a21b5
+Version: webpack 4.41.5
+Time: 5870ms
+Built at: 02/03/2020 5:28:22 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-d580c05369cd70805086.js   5.16 MiB        Index  [emitted] [immutable]  Index
+      js/Index-d580c05369cd70805086.js.map   4.59 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-d580c05369cd70805086.js js/Index-d580c05369cd70805086.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+ERROR in ./app/javascript/components/Players.jsx
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\NBA-App\app\javascript\components\Players.jsx: Unexpected token, expected ";" (79:10)
+
+  77 | 	}
+  78 | 
+> 79 | 	render() {
+     | 	         ^
+  80 | 		const { t, i18n  } = this.props;
+  81 | 
+  82 | 		const changeLanguage = lng => {
+    at Object.raise (C:\NBA-App\node_modules\@babel\parser\lib\index.js:7013:17)
+    at Object.unexpected (C:\NBA-App\node_modules\@babel\parser\lib\index.js:8384:16)
+    at Object.semicolon (C:\NBA-App\node_modules\@babel\parser\lib\index.js:8366:40)
+    at Object.parseExpressionStatement (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11193:10)
+    at Object.parseStatementContent (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10792:19)
+    at Object.parseStatement (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10658:17)
+    at Object.parseBlockOrModuleBlockBody (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11234:25)
+    at Object.parseBlockBody (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11221:10)
+    at Object.parseBlock (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11205:10)
+    at Object.parseFunctionBody (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10220:24)
+    at Object.parseFunctionBodyAndFinish (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10190:10)
+    at Object.parseMethod (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10160:10)
+    at Object.pushClassMethod (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11638:30)
+    at Object.parseClassMemberWithIsStatic (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11580:14)
+    at Object.parseClassMember (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11497:10)
+    at C:\NBA-App\node_modules\@babel\parser\lib\index.js:11452:14
+    at Object.withTopicForbiddingContext (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10533:14)
+    at Object.parseClassBody (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11429:10)
+    at Object.parseClass (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11403:22)
+    at Object.parseStatementContent (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10700:21)
+    at Object.parseStatement (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10658:17)
+    at Object.parseBlockOrModuleBlockBody (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11234:25)
+    at Object.parseBlockBody (C:\NBA-App\node_modules\@babel\parser\lib\index.js:11221:10)
+    at Object.parseTopLevel (C:\NBA-App\node_modules\@babel\parser\lib\index.js:10589:10)
+    at Object.parse (C:\NBA-App\node_modules\@babel\parser\lib\index.js:12192:10)
+    at parse (C:\NBA-App\node_modules\@babel\parser\lib\index.js:12243:38)
+    at parser (C:\NBA-App\node_modules\@babel\core\lib\parser\index.js:54:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\NBA-App\node_modules\@babel\core\lib\transformation\normalize-file.js:93:38)
+    at normalizeFile.next (<anonymous>)
+ @ ./app/javascript/routes/Index.jsx 6:0-44 43:13-20
+ @ ./app/javascript/components/App.jsx
+ @ ./app/javascript/packs/Index.jsx
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 7994ms (Views: 7993.5ms | ActiveRecord: 0.0ms | Allocations: 8550)
+
+
+Started GET "/games" for ::1 at 2020-02-03 17:28:39 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"games"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 4)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: 017940184f4f17ebc148
+Version: webpack 4.41.5
+Time: 5994ms
+Built at: 02/03/2020 5:28:47 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-827428b71a4c0edcf38c.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-827428b71a4c0edcf38c.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-827428b71a4c0edcf38c.js js/Index-827428b71a4c0edcf38c.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 8111ms (Views: 8110.8ms | ActiveRecord: 0.0ms | Allocations: 8615)
+
+
+Started GET "/games/team/2" for ::1 at 2020-02-03 17:29:12 +0000
+Processing by HomepageController#index as HTML
+  Parameters: {"path"=>"games/team/2"}
+  Rendering homepage/index.html.erb within layouts/application
+  Rendered homepage/index.html.erb within layouts/application (Duration: 0.0ms | Allocations: 4)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in C:/NBA-App/public/packs
+[Webpacker] Hash: 57b29896e777e1d1407d
+Version: webpack 4.41.5
+Time: 5770ms
+Built at: 02/03/2020 5:29:20 PM
+                                     Asset       Size       Chunks                         Chunk Names
+          js/Index-0b17e1ff677eae96c93b.js   5.17 MiB        Index  [emitted] [immutable]  Index
+      js/Index-0b17e1ff677eae96c93b.js.map    4.6 MiB        Index  [emitted] [dev]        Index
+    js/application-0b67a3cc2fcde6055024.js    124 KiB  application  [emitted] [immutable]  application
+js/application-0b67a3cc2fcde6055024.js.map    139 KiB  application  [emitted] [dev]        application
+                             manifest.json  737 bytes               [emitted]              
+        media/images/nba_PNG6-f8b8c608.png    344 KiB               [emitted]              
+Entrypoint application = js/application-0b67a3cc2fcde6055024.js js/application-0b67a3cc2fcde6055024.js.map
+Entrypoint Index = js/Index-0b17e1ff677eae96c93b.js js/Index-0b17e1ff677eae96c93b.js.map
+[./app/assets/images/nba_PNG6.png] 80 bytes {Index} [built]
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/Index.jsx] 576 bytes {Index} [built]
+[./app/javascript/packs/application.js] 749 bytes {application} [built]
+[./app/javascript/routes/Index.jsx] 1.65 KiB {Index} [built]
+[./node_modules/webpack/buildin/amd-options.js] (webpack)/buildin/amd-options.js 80 bytes {Index} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 878 bytes {Index} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} {Index} [built]
+    + 790 hidden modules
+
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 7868ms (Views: 7867.4ms | ActiveRecord: 0.0ms | Allocations: 8632)
+
+

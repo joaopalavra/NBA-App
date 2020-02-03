@@ -1,0 +1,25 @@
+{
+  "Index.js": "/packs/js/Index-0b17e1ff677eae96c93b.js",
+  "Index.js.map": "/packs/js/Index-0b17e1ff677eae96c93b.js.map",
+  "application.js": "/packs/js/application-0b67a3cc2fcde6055024.js",
+  "application.js.map": "/packs/js/application-0b67a3cc2fcde6055024.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-0b67a3cc2fcde6055024.js"
+      ],
+      "js.map": [
+        "/packs/js/application-0b67a3cc2fcde6055024.js.map"
+      ]
+    },
+    "Index": {
+      "js": [
+        "/packs/js/Index-0b17e1ff677eae96c93b.js"
+      ],
+      "js.map": [
+        "/packs/js/Index-0b17e1ff677eae96c93b.js.map"
+      ]
+    }
+  },
+  "media/images/nba_PNG6.png": "/packs/media/images/nba_PNG6-f8b8c608.png"
+}
